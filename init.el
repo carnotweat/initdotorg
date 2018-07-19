@@ -1,10 +1,10 @@
-
 ;;  (add-to-list 'load-path "/usr/share/org-mode/lisp/")
-  (add-to-list 'load-path "/home/k/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
+;;  (add-to-list 'load-path "/home/k/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
 (org-babel-do-load-languages 'org-babel-load-languages '((sql . t)
 (python . t)
 )))
+
 (require 'package)
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
 (require 'package)
@@ -326,14 +326,20 @@ Entered on %U
 ;; (setq org-export-babel-evaluate nil) ;; This is for org-mode<9 only. It breaks everything otherwise
 ;;  To activate this feature, you need to set #+PROPERTY: header-args :eval never-export in the beginning or your document
 (setq org-confirm-babel-evaluate nil)
-
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((gnuplot . t)))
+;; add additional languages with '((language . t)))
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
    (shell . t)
+   (gnuplot . t)
    (python . t)
    (R . t)
    (ruby . t)
+   (emacs-lisp . t)
    (ocaml . t)
    (ditaa . t)
    (dot . t)
@@ -402,3 +408,59 @@ Entered on %U
 
 (require 'tramp)
 (setq tramp-default-method "scp")
+
+(require 'calfw)
+(require 'calfw-org)
+(setq cfw:org-capture-template nil)
+;; set key for agenda
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+;;file to save todo items
+(setq org-agenda-files (quote ("/root/task.org")))
+
+;;set priority range from A to C with default A
+(setq org-highest-priority ?A)
+(setq org-lowest-priority ?C)
+(setq org-default-priority ?A)
+
+;;set colours for priorities
+(setq org-priority-faces '((?A . (:foreground "#F0DFAF" :weight bold))
+                           (?B . (:foreground "LightSteelBlue"))
+                           (?C . (:foreground "OliveDrab"))))
+
+;;open agenda in current window
+(setq org-agenda-window-setup (quote current-window))
+
+;;capture todo items using C-c c t
+(define-key global-map (kbd "C-c c") 'org-capture)
+(setq org-capture-templates
+      '(("t" "todo" entry (file+headline "/root/task.org" "Tasks")
+         "* TODO [#A] %?")))
+(setq org-capture-templates
+      '(("t" "todo" entry (file+headline "~/task.org" "Tasks")
+         "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n")))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; org-mode agenda options                                                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;open agenda in current window
+(setq org-agenda-window-setup (quote current-window))
+;;warn me of any deadlines in next 7 days
+(setq org-deadline-warning-days 7)
+;;show me tasks scheduled or due in next fortnight
+(setq org-agenda-span (quote fortnight))
+;;don't show tasks as scheduled if they are already shown as a deadline
+(setq org-agenda-skip-scheduled-if-deadline-is-shown t)
+;;don't give awarning colour to tasks with impending deadlines
+;;if they are scheduled to be done
+(setq org-agenda-skip-deadline-prewarning-if-scheduled (quote pre-scheduled))
+;;don't show tasks that are scheduled or have deadlines in the
+;;normal todo list
+(setq org-agenda-todo-ignore-deadlines (quote all))
+(setq org-agenda-todo-ignore-scheduled (quote all))
+;;sort tasks in order of when they are due and then by priority
+(setq org-agenda-sorting-strategy
+  (quote
+   ((agenda deadline-up priority-down)
+    (todo priority-down category-keep)
+    (tags priority-down category-keep)
+    (search category-keep))))

@@ -2,7 +2,17 @@
 ;;; This format is meant to be slightly human-readable;
 ;;; nevertheless, you probably don't want to edit it.
 ;;; -*- End Of Bookmark File Format Version Stamp -*-
-(("Zsh Configuration"
+(("org-capture-last-stored"
+ (filename . "~/task.org")
+ (front-context-string . "** TODO [#A] hi\n")
+ (rear-context-string . "2015-12-18 Fri>\n")
+ (position . 686))
+("a.txt"
+ (filename . "~/a.txt")
+ (front-context-string . ";; This buffer i")
+ (rear-context-string)
+ (position . 1))
+("Zsh Configuration"
  (filename . "~/.dotfiles/zsh/.zshrc")
  (front-context-string . "# Lines configur")
  (rear-context-string)
