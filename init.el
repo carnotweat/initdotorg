@@ -464,3 +464,30 @@ Entered on %U
     (todo priority-down category-keep)
     (tags priority-down category-keep)
     (search category-keep))))
+(require 'org-sendto-medium)
+(define-key org-mode-map (kbd "C-x C-j") 'org-sendto-medium)
+ (setq org-agenda-custom-commands
+      '(("P" "Project List"
+          ( (tags "PROJECT")
+          )
+        )
+        ("O" "Office"
+          ( (agenda)
+            (tags-todo "OFFICE")
+          )
+        )
+        ("W" "Weekly Plan"
+          ( (agenda)
+            (todo "TODO")
+            (tags "PROJECT")
+          )
+        )
+        ("H" "Home NA Lists"
+          ( (agenda)
+            (tags-todo "HOME")
+            (tags-todo "COMPUTER")
+          )
+        )
+       )
+  )
+
