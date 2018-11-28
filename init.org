@@ -698,7 +698,7 @@ https://emacs.stackexchange.com/questions/3318/org-mode-goto-last-heading
   (org-babel-do-load-languages
    'org-babel-load-languages
    '(
-     (shell . t)
+     
      (python . t)
      (R . t)
      (ruby . t)

@@ -1,4 +1,10 @@
-;;  (add-to-list 'load-path "/usr/share/org-mode/lisp/")
+;; Tell emacs where is your personal elisp lib dir
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
+;; load the packaged named xyz.
+(load "togetherly") ;; best not to include the ending “.el” or “.elc”
+(load "colorg")
+(add-to-list 'load-path "/usr/share/org-mode/lisp/")
 ;;  (add-to-list 'load-path "/home/k/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
 (org-babel-do-load-languages 'org-babel-load-languages '((sql . t)
@@ -71,7 +77,11 @@
 
 (global-font-lock-mode t)
 (custom-set-faces
-  '(flyspell-incorrect ((t (:inverse-video t)))))
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flyspell-incorrect ((t (:inverse-video t)))))
 ;;  (set-face-attribute 'flyspell-incorrect (t (:inverse-video t)))
 
 (line-number-mode 1)
@@ -334,7 +344,7 @@ Entered on %U
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
-   (shell . t)
+  
    (gnuplot . t)
    (python . t)
    (R . t)
@@ -464,8 +474,7 @@ Entered on %U
     (todo priority-down category-keep)
     (tags priority-down category-keep)
     (search category-keep))))
-(require 'org-sendto-medium)
-(define-key org-mode-map (kbd "C-x C-j") 'org-sendto-medium)
+
  (setq org-agenda-custom-commands
       '(("P" "Project List"
           ( (tags "PROJECT")
@@ -491,3 +500,11 @@ Entered on %U
        )
   )
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
