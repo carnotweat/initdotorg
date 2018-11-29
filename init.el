@@ -4,6 +4,8 @@
 ;; load the packaged named xyz.
 (load "togetherly") ;; best not to include the ending “.el” or “.elc”
 (load "colorg")
+(load "amazon")
+(load "echo-server")
 (add-to-list 'load-path "/usr/share/org-mode/lisp/")
 ;;  (add-to-list 'load-path "/home/k/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
