@@ -1,11 +1,22 @@
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+;; Versioning
+(run-at-time "00:59" 3600 'org-save-all-org-buffers)
+
+;; slime 
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+  ;; Replace "sbcl" with the path to your implementation
+  (setq inferior-lisp-program "sbcl")
 
 ;; load the packaged named xyz.
 (load "togetherly") ;; best not to include the ending “.el” or “.elc”
 (load "colorg")
 (load "amazon")
 (load "echo-server")
+(load "shared-buffer")
+(load "lockstep")
+
+
 (add-to-list 'load-path "/usr/share/org-mode/lisp/")
 ;;  (add-to-list 'load-path "/home/k/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
@@ -507,6 +518,9 @@ Entered on %U
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    (togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+    (twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
