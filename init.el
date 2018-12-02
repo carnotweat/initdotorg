@@ -1,6 +1,13 @@
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-;; Versioning
+(add-to-list 'load-path "~/.emacs.d/pack/")
+;; speed org
+
+;; ide
+(setq ggtags-executable-directory "/usr/bin/gtags")
+(setq ggtags-use-idutils t)
+(setq ggtags-use-project-gtagsconf nil)
+;;  Versioning test
 (run-at-time "00:59" 3600 'org-save-all-org-buffers)
 
 ;; slime 
@@ -523,4 +530,4 @@ Entered on %U
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    (twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+    (outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
