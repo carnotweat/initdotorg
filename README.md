@@ -7,6 +7,7 @@ My  init.el for future ref
 (org-babel-load-file (expand-file-name "~/.emacs.d/myemacs.org"))
 
 </code>
+This structure is helpful  in quickly using packages like outshine , which tell you to modify your initdotorg
 
 Upside
 
