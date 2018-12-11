@@ -2,7 +2,9 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/pack/")
 ;; speed org
-
+;;ucf
+(autoload 'ucf-mode "ucf-mode" "Xilinx UCF mode" t)
+(add-to-list 'auto-mode-alist '("\\.ucf\\'" . ucf-mode))
 ;; ide
 (setq ggtags-executable-directory "/usr/bin/gtags")
 (setq ggtags-use-idutils t)
@@ -22,7 +24,7 @@
 (load "echo-server")
 (load "shared-buffer")
 (load "lockstep")
-
+(load "xorshift")
 
 (add-to-list 'load-path "/usr/share/org-mode/lisp/")
 ;;  (add-to-list 'load-path "/home/k/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
@@ -530,4 +532,4 @@ Entered on %U
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    (outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+    (elfeed outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
