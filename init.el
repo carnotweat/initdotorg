@@ -2,6 +2,54 @@
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/pack/")
 ;; speed org
+;; bitlbee & telegram
+(defun i-wanna-be-social ()
+  "Connect to IM networks using bitlbee."
+  (interactive)
+  (erc :server "localhost" :port 6667 :nick "meraesg"))
+  (defun erc-cmd-SHOWOFF (&rest ignore)
+    "Show off implementation"
+    (let* ((chnl (erc-buffer-list))
+           (srvl (erc-buffer-list 'erc-server-buffer-p))
+           (memb (apply '+ (mapcar (lambda (chn)
+                                     (with-current-buffer chn
+                                       (1- (length (erc-get-channel-user-list)))))
+                                   chnl)))
+           (show (format "is connected to %i networks and talks in %i chans to %i ppl overall :>"
+                         (length srvl)
+                         (- (length chnl) (length srvl))
+                         memb)))
+      (erc-send-action (erc-default-target) show)))
+  (defalias 'erc-cmd-SO 'erc-cmd-SHOWOFF)
+  
+  (defun erc-cmd-DETAILED-SHOWOFF (&rest ignore)
+    "Show off implementation enriched with even more with details"
+    (let* ((chnl (erc-buffer-list))
+           (srvl (erc-buffer-list 'erc-server-buffer-p)))
+      (mapcar (lambda (srv)
+                (let* ((netn (with-current-buffer srv erc-session-server))
+                       (netp (with-current-buffer srv erc-session-port))
+                       (chns (remove-if-not
+                              (lambda (chn)
+                                (and (string= netn (with-current-buffer chn erc-session-server))
+                                     (eq netp (with-current-buffer chn erc-session-port))))
+                              chnl))
+                       (chnn (1- (length chns)))
+                       (chnm (remove nil
+                                     (mapcar (lambda (chn)
+                                               (with-current-buffer chn
+                                                 (erc-get-channel-user-list)))
+                                             chns)))
+                       (chnmn (apply '+ (mapcar '1- (mapcar 'length chnm))))
+                       (show (format "is connected to %s (%s), talking to %i users in %i chans"
+                                     netn
+                                     (buffer-name srv)
+                                     chnmn
+                                     chnn)))
+                  (erc-send-action (erc-default-target) show)
+                  (sit-for 1)))
+              srvl)))
+  (defalias 'erc-cmd-DSO 'erc-cmd-DETAILED-SHOWOFF)
 ;;ucf
 (autoload 'ucf-mode "ucf-mode" "Xilinx UCF mode" t)
 (add-to-list 'auto-mode-alist '("\\.ucf\\'" . ucf-mode))
@@ -532,4 +580,4 @@ Entered on %U
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    (elfeed outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+    (ecb tabbar eide elfeed outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
