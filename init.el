@@ -1,59 +1,37 @@
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/pack/")
-;; speed org
-;; bitlbee & telegram
-(defun i-wanna-be-social ()
-  "Connect to IM networks using bitlbee."
-  (interactive)
-  (erc :server "localhost" :port 6667 :nick "meraesg"))
-  (defun erc-cmd-SHOWOFF (&rest ignore)
-    "Show off implementation"
-    (let* ((chnl (erc-buffer-list))
-           (srvl (erc-buffer-list 'erc-server-buffer-p))
-           (memb (apply '+ (mapcar (lambda (chn)
-                                     (with-current-buffer chn
-                                       (1- (length (erc-get-channel-user-list)))))
-                                   chnl)))
-           (show (format "is connected to %i networks and talks in %i chans to %i ppl overall :>"
-                         (length srvl)
-                         (- (length chnl) (length srvl))
-                         memb)))
-      (erc-send-action (erc-default-target) show)))
-  (defalias 'erc-cmd-SO 'erc-cmd-SHOWOFF)
-  
-  (defun erc-cmd-DETAILED-SHOWOFF (&rest ignore)
-    "Show off implementation enriched with even more with details"
-    (let* ((chnl (erc-buffer-list))
-           (srvl (erc-buffer-list 'erc-server-buffer-p)))
-      (mapcar (lambda (srv)
-                (let* ((netn (with-current-buffer srv erc-session-server))
-                       (netp (with-current-buffer srv erc-session-port))
-                       (chns (remove-if-not
-                              (lambda (chn)
-                                (and (string= netn (with-current-buffer chn erc-session-server))
-                                     (eq netp (with-current-buffer chn erc-session-port))))
-                              chnl))
-                       (chnn (1- (length chns)))
-                       (chnm (remove nil
-                                     (mapcar (lambda (chn)
-                                               (with-current-buffer chn
-                                                 (erc-get-channel-user-list)))
-                                             chns)))
-                       (chnmn (apply '+ (mapcar '1- (mapcar 'length chnm))))
-                       (show (format "is connected to %s (%s), talking to %i users in %i chans"
-                                     netn
-                                     (buffer-name srv)
-                                     chnmn
-                                     chnn)))
-                  (erc-send-action (erc-default-target) show)
-                  (sit-for 1)))
-              srvl)))
-  (defalias 'erc-cmd-DSO 'erc-cmd-DETAILED-SHOWOFF)
+
+;;Graphviz dot
+
+;;;###autoload
+(with-eval-after-load "org"
+  (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot)))
+
+
+;; UTF-8
+(require 'un-define "un-define" t)
+(set-buffer-file-coding-system 'utf-8 'utf-8-unix)
+(set-default buffer-file-coding-system 'utf-8-unix)
+(set-default-coding-systems 'utf-8-unix)
+(prefer-coding-system 'utf-8-unix)
+(set-default default-buffer-file-coding-system 'utf-8-unix)
+
+;; package-list
+;; update
+(require 'package)
+(setq package-archives
+      '(("melpa" . "https://melpa.org/packages/")
+        ("gnu" . "https://elpa.gnu.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
+(package-initialize)
+
 ;;ucf
 (autoload 'ucf-mode "ucf-mode" "Xilinx UCF mode" t)
 (add-to-list 'auto-mode-alist '("\\.ucf\\'" . ucf-mode))
 ;; ide
+(setq max-lisp-eval-depth 10000)
+
 (setq ggtags-executable-directory "/usr/bin/gtags")
 (setq ggtags-use-idutils t)
 (setq ggtags-use-project-gtagsconf nil)
@@ -65,15 +43,15 @@
   ;; Replace "sbcl" with the path to your implementation
   (setq inferior-lisp-program "sbcl")
 
+;; modularizing init
 ;; load the packaged named xyz.
 (load "togetherly") ;; best not to include the ending “.el” or “.elc”
 (load "colorg")
-(load "amazon")
 (load "echo-server")
 (load "shared-buffer")
 (load "lockstep")
-(load "xorshift")
-
+(load "etorrent")
+(load "soc")
 (add-to-list 'load-path "/usr/share/org-mode/lisp/")
 ;;  (add-to-list 'load-path "/home/k/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
@@ -82,14 +60,28 @@
 )))
 
 (require 'package)
-(add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t)
-(require 'package)
-(package-initialize)
+(setq load-prefer-newer t
+      package-enable-at-startup nil)
+
 (setq package-archives
 '(("ELPA" . "http://tromey.com/elpa/")
    ("gnu" . "http://elpa.gnu.org/packages/")
    ("melpa" . "http://melpa.milkbox.net/packages/")
    ("marmalade" . "http://marmalade-repo.org/packages/")))
+
+(package-initialize)
+
+;; Bootstrap
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+;; To load newer version of org
+(package-initialize)
+
+;; Just follow git-controlled links without asking
+(setq-default vc-follow-symlinks t)
+
 
 (add-to-list 'load-path "~/lib/elisp/")
 ;; (add-to-list 'load-path "~/.emacs.d/elpa/org-20150302/")
@@ -580,4 +572,5 @@ Entered on %U
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    (ecb tabbar eide elfeed outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+    ( s aria2 ecb tabbar eide  outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+(put 'upcase-region 'disabled nil)
