@@ -24,3 +24,5 @@ Less [Restrictions](https://twitter.com/nonsameer/status/1067296037616812032)
 
 
 Cutting it short, this seems to be enough for the gist.
+
+To Do : Automating the computation of find and replace from user input, by scripting.
