@@ -15,10 +15,10 @@
 #+end_src
 
 #+RESULTS: lista
+| home   | code   |
 | code   | prod   |
 | prod   | career |
 | career | proof  |
-| proof  | x      |
 
 #+name: make-dot
 #+BEGIN_SRC emacs-lisp :var table=lista :results output :exports none
@@ -28,10 +28,10 @@
 #+END_SRC
 
 #+RESULTS: make-dot
+: "home" -> "code";
 : "code" -> "prod";
 : "prod" -> "career";
 : "career" -> "proof";
-: "proof" -> "x";
 
 #+BEGIN_SRC dot :file dependencias.pdf :cmdline -Tpdf :var input=make-dot :exports results
 digraph {
