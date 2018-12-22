@@ -15,6 +15,10 @@ the way was my way to see whatever little knowledge I have about data structures
 
 All I d do was to change the # of  *s in the index of the top list.
 
+Another example: using [xorshift](https://github.com/syohex/emacs-xorshift)  to detect differential phase between 2 signals in FPGA
+and LVSD in general. As, a simple #xor gate between the two signals will create a phase difference signal proportional to the phase difference.
+Next steps : Can bus sniffing on *nix systems
+
 
 Upside
 
