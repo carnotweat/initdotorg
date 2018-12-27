@@ -1,0 +1,7 @@
+<map id="%3" name="%3">
+<area shape="rect" id="node1" href="google.com" title="home" alt="" coords="5,41,77,89"/>
+<area shape="rect" id="node2" href="google.com" title="code" alt="" coords="125,41,197,89"/>
+<area shape="rect" id="node3" href="google.com" title="prod" alt="" coords="245,5,317,53"/>
+<area shape="rect" id="node4" href="google.com" title="career" alt="" coords="245,77,317,125"/>
+<area shape="rect" id="node5" href="google.com" title="proof" alt="" coords="365,77,437,125"/>
+</map>

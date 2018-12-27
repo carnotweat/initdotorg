@@ -1,3 +1,5 @@
+(setq user-emacs-directory "~/.emacs.d/")
+
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/pack/")
@@ -8,6 +10,8 @@
 (with-eval-after-load "org"
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot)))
 
+;; groff
+(require 'ox-groff)
 
 ;; UTF-8
 (require 'un-define "un-define" t)
@@ -572,5 +576,5 @@ Entered on %U
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    ( s aria2 ecb tabbar eide  outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+    (ox-pandoc magit s aria2 ecb tabbar eide outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
 (put 'upcase-region 'disabled nil)

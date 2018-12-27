@@ -1,0 +1,40 @@
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(defvar *emacs-default-enabled* t)
+(defvar *emacs-starter-enabled* nil)
+(defvar *other-config-enabled* nil)
+
+(cond (*emacs-default-enabled* 
+       (add-to-list 'load-path "~/.emacs.d/")
+       (load "~/.emacs.d/init.el"))
+      (*emacs-starter-enabled* 
+       (add-to-list 'load-path "~/.emacs2.d/")
+       (load "~/.emacs2.d/init.el"))
+      (*other-config-enabled*
+       (add-to-list 'load-path "~/.emacs3.d/")
+       (load "~/.emacs3.d/init.el")))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
+ '(org-export-backends
+   (quote
+    (ascii beamer html icalendar latex man md odt org texinfo confluence deck freemind groff koma-letter rss s5 taskjuggler)))
+ '(package-selected-packages
+   (quote
+    (ox-pandoc magit s aria2 ecb tabbar eide outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(flyspell-incorrect ((t (:inverse-video t)))))

@@ -1,7 +1,7 @@
 * home
 ** code
 *** prod
-****  career
+***  career
 ***** proof
 #+name: lista
 #+begin_src elisp
@@ -18,22 +18,15 @@
 | code   | prod   |
 | prod   | career |
 | career | proof  |
-| proof  | x      |
 
 #+name: make-dot
 #+BEGIN_SRC emacs-lisp :var table=lista :results output :exports none
   (mapcar #'(lambda (x)
-                (princ (format "\"%s\" -> \"%s\";\n" (first x) (second x))))
-          table)
-#+END_SRC
-
-#+RESULTS: make-dot
 : "code" -> "prod";
 : "prod" -> "career";
 : "career" -> "proof";
-: "proof" -> "x";
 
-#+BEGIN_SRC dot :file dependencias.pdf :cmdline -Tpdf :var input=make-dot :exports results
+#+BEGIN_SRC dot :file a.cmapx :cmdline -Tcmapx :var input=make-dot :exports results
 digraph {
    rankdir=LR;
    splines=true;
@@ -43,6 +36,6 @@ digraph {
 #+END_SRC
 
 #+RESULTS:
-[[file:dependencias.pdf]]
+[[file:a.cmapx]]
 
 #+CAPTION: Dependency diagram

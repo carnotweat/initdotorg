@@ -1,0 +1,23 @@
+#+TITLE: res
+#+AUTHOR: sameer
+
+
+  /content/
+  #+BEGIN_SRC emacs-lisp
+;; Definition of `org-global-props' that could go into your init file:
+(defun org-global-props (&optional property buffer)
+  "Get the plists of global org properties of current buffer."
+  (unless property (setq property "PROPERTY"))
+  (with-current-buffer (or buffer (current-buffer))
+    (org-element-map (org-element-parse-buffer) 'keyword (lambda (el) (when (string-match property (org-element-property :key el)) el)))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Stuff for your org-file:
+(mapcar (lambda (prop)
+      (list (org-element-property :key prop)
+        (org-element-property :value prop)))
+    (org-global-props "\\(AUTHOR\\|TITLE\\|XYZ\\)"))
+  #+END_SRC
+
+  #+RESULTS:
+  | TITLE  | res    |
+  | AUTHOR | sameer |
