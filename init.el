@@ -3,7 +3,7 @@
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/pack/")
-
+(add-to-list 'load-path "~/.emacs.d/org-pack/")
 ;;Graphviz dot
 
 ;;;###autoload
@@ -13,6 +13,11 @@
 ;; groff
 (require 'ox-groff)
 
+;; inline todo
+
+(require 'org-inlinetask)
+(setq org-inlinetask-default-state "TO-READ")
+
 ;; UTF-8
 (require 'un-define "un-define" t)
 (set-buffer-file-coding-system 'utf-8 'utf-8-unix)
@@ -20,6 +25,14 @@
 (set-default-coding-systems 'utf-8-unix)
 (prefer-coding-system 'utf-8-unix)
 (set-default default-buffer-file-coding-system 'utf-8-unix)
+
+;; agenda
+
+(defvar dir-where-you-store-org-files "~/")
+(setq 
+ org-agenda-files 
+ (mapcar (lambda (x) (concat dir-where-you-store-org-files x))
+         '("todo.org")))
 
 ;; package-list
 ;; update
@@ -49,18 +62,17 @@
 
 ;; modularizing init
 ;; load the packaged named xyz.
-(load "togetherly") ;; best not to include the ending “.el” or “.elc”
 (load "colorg")
+(load "blog")
 (load "echo-server")
 (load "shared-buffer")
-(load "lockstep")
-(load "etorrent")
-(load "soc")
+(load "list2csv")
 (add-to-list 'load-path "/usr/share/org-mode/lisp/")
-;;  (add-to-list 'load-path "/home/k/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
+;;  (add-to-list 'load-path "/home/sameer/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
 (org-babel-do-load-languages 'org-babel-load-languages '((sql . t)
-(python . t)
+							 (python . t)
+							 (shell . t)
 )))
 
 (require 'package)
@@ -492,7 +504,7 @@ Entered on %U
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 ;;file to save todo items
-(setq org-agenda-files (quote ("/root/task.org")))
+(setq org-agenda-files (quote ("/home/sameer/task.org")))
 
 ;;set priority range from A to C with default A
 (setq org-highest-priority ?A)
@@ -565,7 +577,15 @@ Entered on %U
         )
        )
   )
+(defun org-todo-force-notes ()
+  (interactive)
+  (let ((org-todo-log-states
+         (mapcar (lambda (state)
+                   (list state 'note 'time))
+                 (apply 'append org-todo-sets))))
+    (call-interactively 'org-todo)))
 
+(define-key org-mode-map (kbd "C-c C-S-t") 'org-todo-force-notes)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
