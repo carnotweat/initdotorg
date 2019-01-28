@@ -1,14 +1,31 @@
+;; -*- lexical-binding: t -*-
+
 (setq user-emacs-directory "~/.emacs.d/")
+
 
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/pack/")
 (add-to-list 'load-path "~/.emacs.d/org-pack/")
-;;Graphviz dot
+
+
+
+;; nnir
+
+(load-file "~/.emacs.d/lisp/imap.el")
+(require 'nnir)
+(setq nnir-search-engine 'namazu)
+(setq nnir-namazu-index-directory (expand-file-name "~/.namazu-mail"))
+(setq nnir-namazu-remove-prefix (expand-file-name "~/Mail"))
+(setq nnir-mail-backend gnus-select-method)      
+
+;; Graphviz dot
 
 ;;;###autoload
 (with-eval-after-load "org"
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot)))
+
+
 
 ;; groff
 (require 'ox-groff)
@@ -67,6 +84,8 @@
 (load "echo-server")
 (load "shared-buffer")
 (load "list2csv")
+(load "ox-rss")
+(load "org-dial")
 (add-to-list 'load-path "/usr/share/org-mode/lisp/")
 ;;  (add-to-list 'load-path "/home/sameer/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
@@ -324,7 +343,12 @@
 Entered on %U
   %i
   %a"))))
-
+(add-to-list
+ 'org-capture-templates
+ '("l" "Ledger Entry" plain (file "~/org/inbox.ledger")
+   "%<%Y/%m/%d> %^{To whom}
+    Assets:Checking  $ -%^{How much}
+    Expenses:%?" :unnarrowed t) t)
 (setq org-agenda-include-all-todo t)
 (setq org-agenda-include-diary t)
 
@@ -577,6 +601,7 @@ Entered on %U
         )
        )
   )
+
 (defun org-todo-force-notes ()
   (interactive)
   (let ((org-todo-log-states
@@ -584,6 +609,7 @@ Entered on %U
                    (list state 'note 'time))
                  (apply 'append org-todo-sets))))
     (call-interactively 'org-todo)))
+
 
 (define-key org-mode-map (kbd "C-c C-S-t") 'org-todo-force-notes)
 (custom-set-variables
@@ -598,3 +624,4 @@ Entered on %U
    (quote
     (ox-pandoc magit s aria2 ecb tabbar eide outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
 (put 'upcase-region 'disabled nil)
+

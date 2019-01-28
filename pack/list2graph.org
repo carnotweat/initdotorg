@@ -1,8 +1,8 @@
 * home
 ** code
 *** prod
-***  career
-***** proof
+****  career
+**** proof
 #+name: lista
 #+begin_src elisp
   (org-element-map (org-element-parse-buffer 'headline )
@@ -15,18 +15,21 @@
 #+end_src
 
 #+RESULTS: lista
-| code   | prod   |
-| prod   | career |
-| career | proof  |
+| home | code   |
+| code | prod   |
+| prod | career |
+| prod | proof  |
 
 #+name: make-dot
 #+BEGIN_SRC emacs-lisp :var table=lista :results output :exports none
-  (mapcar #'(lambda (x)
+  (mapcar '(lambda (x)
+#+END_SRC
 : "code" -> "prod";
 : "prod" -> "career";
 : "career" -> "proof";
 
-#+BEGIN_SRC dot :file a.cmapx :cmdline -Tcmapx :var input=make-dot :exports results
+
+#+BEGIN_SRC dot :file a.cmapx :cmdline -Tpdf :var input=make-dot :exports results
 digraph {
    rankdir=LR;
    splines=true;
@@ -36,6 +39,6 @@ digraph {
 #+END_SRC
 
 #+RESULTS:
-[[file:a.cmapx]]
+
 
 #+CAPTION: Dependency diagram

@@ -1,0 +1,40 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ '((".showrss.info"
+  [url-cookie "__cfduid" "d5b97206ab33ba682f56de000501ca30e1548275955" "23 Jan 20 20:39:15 [GMT]" "/" ".showrss.info" nil]
+  [url-cookie "HttpOnly" nil "23 Jan 20 20:39:15 [GMT]" "/" ".showrss.info" nil])
+ (".economist.com"
+  [url-cookie "visid_incap_121505" "BTV2XXSMSEmj6mJup5ozbG16S1wAAAAAQUIPAAAAAAAhUXMfhhitWD6kqFlRMWUF" "Sat, 25 Jan 2020 12:14:44 GMT" "/" ".economist.com" nil])
+ ("showrss.info"
+  [url-cookie "XSRF-TOKEN" "eyJpdiI6IngyNEp3anNBVFF0T1pXWTRwK1RQRnc9PSIsInZhbHVlIjoiUksza1ZRek1QRE5qa2FuZDNvRXB2cFdQdkNWUTlvbVhiXC9KUTZVOHM0ZUQwb1ZMaHU3TjNQS01ENmZDN1lOSmQiLCJtYWMiOiIyNjM2NzM4NDVmZGZiYjRiNDM0ZmUxN2Q5NjBhZTkyNGMzYjc2NTMyMDQwYTdkYzc1NmYwZGY2NjU4OTI1NTA1In0%3D" "27-Jan-2019 23:41:25.00 GMT" "/" "showrss.info" nil]
+  [url-cookie "Max-Age" "7200" "27-Jan-2019 23:41:25.00 GMT" "/" "showrss.info" nil])
+ (".pblc.it"
+  [url-cookie "__cfduid" "d2e15dcbd58359dc069ccb301bc29a75a1548500898" "26 Jan 20 11:08:18 [GMT]" "/" ".pblc.it" nil]
+  [url-cookie "HttpOnly" nil "26 Jan 20 11:08:18 [GMT]" "/" ".pblc.it" nil])
+ (".grammarist.com"
+  [url-cookie "__cfduid" "d69227758b5fc6aabd1ecee5e9fa763801548501014" "26 Jan 20 11:10:14 [GMT]" "/" ".grammarist.com" nil]
+  [url-cookie "HttpOnly" nil "26 Jan 20 11:10:14 [GMT]" "/" ".grammarist.com" nil])
+ (".google.com"
+  [url-cookie "NID" "156=O8pZ6bDMmJcFViu9RfVB01gn3DS3iPd9Sk3tHHJso42O4fH65WXXW7F5OzNPhY2zPUPOTg0m7m2QlfsBbty6rO2edxSqjGatvPBfkcnbhmw2_4kLIq7TuyigVSC5JjFO-GCgjBNrHleW9r3pDXbBGPd_zfdjyWg-SOvSoE1kRCA" "28-Jul-2019 19:08:17.00 GMT" "/" ".google.com" nil]
+  [url-cookie "HttpOnly" nil "28-Jul-2019 19:08:17.00 GMT" "/" ".google.com" nil])
+ (".medium.com"
+  [url-cookie "__cfduid" "da0a2ccedda2b0a19c2f7da44394aaca61548532445" "26 Jan 20 19:54:05 [GMT]" "/" ".medium.com" nil]
+  [url-cookie "HttpOnly" nil "26 Jan 20 19:54:05 [GMT]" "/" ".medium.com" nil])
+ (".twitter.com"
+  [url-cookie "guest_id" "v1%3A154368671112081157" "Mon, 30 Nov 2020 17:51:51 GMT" "/" ".twitter.com" nil]
+  [url-cookie "personalization_id" "v1_PMzrNTF4nhOMf7PaLmxD4w==" "Mon, 30 Nov 2020 17:51:51 GMT" "/" ".twitter.com" nil]))
+)
+(setq url-cookie-secure-storage
+ '((".medium.com"
+  [url-cookie "uid" "lo_FuHY3m8xYdwW" "26 Jan 20 19:54:05 [GMT]" "/" ".medium.com" t]
+  [url-cookie "HttpOnly" nil "26 Jan 20 19:54:05 [GMT]" "/" ".medium.com" t])
+ (".theguardian.com"
+  [url-cookie "GU_mvt_id" "810613" "Sat, 27 Apr 2019 21:40:51 GMT" "/" ".theguardian.com" t]))
+)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:

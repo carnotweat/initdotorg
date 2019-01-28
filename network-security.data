@@ -1,3 +1,7 @@
 (
+ (:id "sha1:ea5be0fbd5edaf3a334070d2f903300fa64e1cad" :fingerprint "sha1:0f:d5:18:61:e0:6d:f3:d7:c4:66:43:c6:c7:aa:51:c4:ce:07:af:d5")
+ (:id "sha1:ac7feb949147490ee549b5b6c3ae7edd929ea335" :fingerprint "sha1:10:df:d6:50:e4:f5:f4:b4:93:d2:89:43:1c:e3:fa:c6:31:6b:0f:6b")
+ (:id "sha1:60d5181487044df8465f7968aa3d3ce67dd1a25a" :fingerprint "sha1:10:df:d6:50:e4:f5:f4:b4:93:d2:89:43:1c:e3:fa:c6:31:6b:0f:6b" :host "news.gwene.org:nntp" :conditions (:no-host-match))
+ (:id "sha1:706608f9b7fcfdea563351d49047f296d74a5a76" :fingerprint "sha1:59:6a:2b:b1:9f:5d:0c:be:a9:12:51:7e:ca:17:d9:d4:cd:f4:ca:76")
  (:id "sha1:85457c729378cc93c732b6a3941c8e4f9c2e60f3" :fingerprint "sha1:ab:a6:d7:6a:b3:d3:63:fa:19:0d:65:41:60:23:6e:ef:d3:2a:46:dc" :host "marmalade-repo.org:443" :conditions (:expired :unknown-ca :invalid))
 )
