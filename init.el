@@ -3,11 +3,14 @@
 (setq user-emacs-directory "~/.emacs.d/")
 
 
+;; org-mode reinstall
+;; (require 'package)
+;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+
 ;; Tell emacs where is your personal elisp lib dir
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 (add-to-list 'load-path "~/.emacs.d/pack/")
 (add-to-list 'load-path "~/.emacs.d/org-pack/")
-
 
 ;; nnir
 
@@ -20,7 +23,7 @@
 
 ;; Graphviz dot
 
-;;;###autoload
+;; ###autoload
 (with-eval-after-load "org"
   (add-to-list 'org-src-lang-modes '("dot" . graphviz-dot)))
 
@@ -41,16 +44,26 @@
 ;; agenda
 
 (custom-set-variables
- '(org-directory "~/org")
+ '(org-directory "/home/sameer/org")
  '(org-agenda-files (list org-directory)))
 
 ;; agenda
+;; caused an issue last time , conactenated ~/org/~org as an org agenda file
+;;(defvar dir-where-you-store-org-files "/home/sameer/org")
+;; (setq 
+;; org-agenda-files 
+;; (mapcar (lambda (x) (concat dir-where-you-store-org-files x))
+ ;;        '("/home/sameer/org")))
 
-(defvar dir-where-you-store-org-files "~/")
-(setq 
- org-agenda-files 
- (mapcar (lambda (x) (concat dir-where-you-store-org-files x))
-         '("todo.org")))
+;; clock in
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
+;; view
+
+(setq org-agenda-span 100
+      org-agenda-start-on-weekday nil
+      org-agenda-start-day "-3d")
 
 ;; package-list
 ;; update
@@ -85,6 +98,7 @@
 (load "echo-server")
 (load "shared-buffer")
 (load "list2csv")
+; (load "ox-html")
 (load "ox-rss")
 (load "org-dial")
 (load "org-git-link")
@@ -101,37 +115,81 @@
 
       (require 'ob-tangle)
 
-
-;; groff
-(require 'ox-groff)
-
-(add-to-list 'load-path "/usr/share/org-mode/lisp/")
 ;;  (add-to-list 'load-path "/home/sameer/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
 (org-babel-do-load-languages 'org-babel-load-languages '((sql . t)
 							 (python . t)
-							 (shell . t)
+							 
 )))
 
 (require 'package)
 (setq load-prefer-newer t
       package-enable-at-startup nil)
-
+(add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 (setq package-archives
 '(("ELPA" . "http://tromey.com/elpa/")
    ("gnu" . "http://elpa.gnu.org/packages/")
    ("melpa" . "http://melpa.milkbox.net/packages/")
    ("marmalade" . "http://marmalade-repo.org/packages/")))
 
-(package-initialize)
+
 
 ;; Bootstrap
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;;(unless (package-installed-p 'use-package)
+;;  (package-refresh-contents)
+;;  (package-install 'use-package))
+;; (use-package org :pin gnu)
+;; Install org-mode 1
+;; check src of download and modify function
+(defun package-from-archive (f &rest args)
+  (and (apply f args)
+       (assq (car args) package-alist)))
 
-;; To load newer version of org
-(package-initialize)
+(advice-add 'package-installed-p :around 'package-from-archive)
+;; bootstrap straight.el
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+;; Install org
+
+(use-package org)
+
+;; Contingency install
+
+(unless package-archive-contents    ;; Refresh the packages descriptions
+  (package-refresh-contents))
+(setq package-load-list '(all))     ;; List of packages to load
+(unless (package-installed-p 'org)  ;; Make sure the Org package is
+  (package-install 'org))           ;; installed, install it if not
+(package-initialize)                ;; Initialize & Install Package
+
+
+;; Install org-mode 2
+
+(eval-and-compile
+  (let ((clp))
+    (while (setq clp (locate-library "org"))
+      (setq load-path
+        (delete
+         (directory-file-name (file-name-directory clp)) load-path))))
+
+  (dolist (S (append (apropos-internal (concat "^" (symbol-name 'org) "-"))
+             (apropos-internal (concat "^global-" (symbol-name 'org) "-"))))
+    (when (and (fboundp S)
+           (let ((sf (symbol-function S)))
+         (and (listp sf) (eq (car sf) 'autoload))))
+      (fmakunbound S))))
 
 ;; Just follow git-controlled links without asking
 (setq-default vc-follow-symlinks t)
@@ -139,16 +197,27 @@
 
 (add-to-list 'load-path "~/lib/elisp/")
 ;; (add-to-list 'load-path "~/.emacs.d/elpa/org-20150302/")
-(add-to-list 'load-path "~/.emacs.d/elpa/xclip-1.3/")
+;; (add-to-list 'load-path "~/.emacs.d/elpa/xclip-1.3/")
 ;; (add-to-list 'load-path "~/.emacs.d/elpa/htmlize-20130207.1202/")
 (add-to-list 'load-path "~/.emacs.d/elpa/polymode-20151013.814/")
 (add-to-list 'load-path "~/.emacs.d/elpa/lua-mode-20150518.942/")
 (add-to-list 'load-path "~/.emacs.d/elpa/toc-org-20150801.748/")
 (add-to-list 'load-path "~/.emacs.d/elpa/epresent-20150324.610/")
 
-(require 'org-install)
+
 (require 'org)
-;; (require 'org-html)
+(require 'org-install)
+
+;; (require 'org-habit)
+
+(require 'org-habit)
+(add-to-list 'org-modules "org-habit")
+(setq org-habit-preceding-days 7
+      org-habit-following-days 1
+      org-habit-graph-column 80
+      org-habit-show-habits-only-for-today t
+      org-habit-show-all-today t)
+;; require  org-html
 
 (require 'font-lock)      
 (require 'cc-mode) 
@@ -268,8 +337,8 @@
 
 ;;  (if(string-equal system-type "gnu/linux")   ; Linux!
 ;;      (
-       (require (quote xclip))
-       (xclip-mode 1)
+;;       (require (quote xclip))
+;;       (xclip-mode 1)
 ;;      )()
 ;;        )
 
@@ -339,7 +408,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-(setq org-directory "~/org/")
+;;(setq org-directory "/home/sameer/org/")
 
 (setq org-hide-leading-stars t)
 (setq org-alphabetical-lists t)
@@ -354,25 +423,25 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-(setq org-default-notes-file "~/org/notes.org")
+(setq org-default-notes-file "/home/sameer/org/notes.org")
      (define-key global-map "\C-cd" 'org-capture)
-(setq org-capture-templates (quote (("t" "Todo" entry (file+headline "~/org/liste.org" "Tasks") "* TODO %?
+(setq org-capture-templates (quote (("t" "Todo" entry (file+headline "/home/sameer/org/liste.org" "Tasks") "* TODO %?
   %i
-  %a" :prepend t) ("j" "Journal" entry (file+datetree "~/org/journal.org") "* %?
+  %a" :prepend t) ("j" "Journal" entry (file+datetree "/home/sameer/org/journal.org") "* %?
 Entered on %U
   %i
   %a"))))
 (add-to-list
  'org-capture-templates
- '("l" "Ledger Entry" plain (file "~/org/inbox.ledger")
+ '("l" "Ledger Entry" plain (file "/home/sameer/org/inbox.ledger")
    "%<%Y/%m/%d> %^{To whom}
     Assets:Checking  $ -%^{How much}
     Expenses:%?" :unnarrowed t) t)
 (setq org-agenda-include-all-todo t)
 (setq org-agenda-include-diary t)
 
-(setq org-agenda-files (quote ("~/org/liste.org" "~/org/google.org")))
-(setq revert-without-query (quote ("google.org")))
+; (setq org-agenda-files (quote ("/home/sameer/org/todo.org" "/home/sameer/org/sales.org")))
+; (setq revert-without-query (quote ("sales.org")))
 
 (setq org-id-method (quote uuidgen))
 
@@ -400,8 +469,8 @@ Entered on %U
                   (org-todo 'done)
                 (org-todo 'todo)))))))
 
-(add-to-list 'load-path "~/.emacs.d/elpa/org-download-20171116.1045/")
-(require 'org-download)
+; (add-to-list 'load-path "~/.emacs.d/elpa/org-download-20171116.1045/")
+; (require 'org-download)
 (setq org-download-method 'attach)
 (global-set-key (kbd "C-c S") 'org-download-screenshot)
 
@@ -540,14 +609,11 @@ Entered on %U
 (require 'tramp)
 (setq tramp-default-method "scp")
 
-(require 'calfw)
-(require 'calfw-org)
-(setq cfw:org-capture-template nil)
 ;; set key for agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 ;;file to save todo items
-(setq org-agenda-files (quote ("/home/sameer/task.org")))
+;; (setq org-agenda-files (quote ("/home/sameer/org")))
 
 ;;set priority range from A to C with default A
 (setq org-highest-priority ?A)
@@ -641,6 +707,7 @@ Entered on %U
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    (ox-pandoc magit s aria2 ecb tabbar eide outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))
+    (ox-pandoc magit s aria2 ecb tabbar eide outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ##  rudel org-download cl-print calfw-org calfw))))
 (put 'upcase-region 'disabled nil)
 
+(setq max-specpdl-size 13000)

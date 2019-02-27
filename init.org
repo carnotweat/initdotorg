@@ -161,7 +161,7 @@ start with =C-c=:
 ** Benefiting from org-mode's contrib
 #+BEGIN_SRC emacs-lisp
 ;;  (add-to-list 'load-path "/usr/share/org-mode/lisp/")
-  (add-to-list 'load-path "/home/alegrand/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
+  (add-to-list 'load-path "/home/sameer/.emacs.d/site-lisp/org/")
 #+END_SRC
 ** ELPA
 #+BEGIN_SRC emacs-lisp
