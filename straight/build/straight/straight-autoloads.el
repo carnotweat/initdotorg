@@ -3,8 +3,8 @@
 ;;; Code:
 
 
-;;;### (autoloads nil "straight" "straight.el" (23670 59624 378980
-;;;;;;  951000))
+;;;### (autoloads nil "straight" "straight.el" (23672 5306 614187
+;;;;;;  926000))
 ;;; Generated autoloads from straight.el
 
 (autoload 'straight-get-recipe "straight" "\
@@ -306,7 +306,7 @@ Read version lockfiles and restore package versions to those listed.
 
 ;;;***
 
-;;;### (autoloads nil nil ("straight-x.el") (23670 59624 378980 951000))
+;;;### (autoloads nil nil ("straight-x.el") (23672 5306 614187 926000))
 
 ;;;***
 

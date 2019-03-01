@@ -1,20 +1,21 @@
 ;; -*- lexical-binding: t -*-
 
-(setq user-emacs-directory "~/.emacs.d/")
-
-
+(setq user-emacs-directory "/home/sameer/.emacs.d/")
+(global-linum-mode 1)
+(setq max-specpdl-size 10000)
+;; it did not work 
 ;; org-mode reinstall
 ;; (require 'package)
 ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
 
 ;; Tell emacs where is your personal elisp lib dir
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-(add-to-list 'load-path "~/.emacs.d/pack/")
-(add-to-list 'load-path "~/.emacs.d/org-pack/")
+(add-to-list 'load-path "/home/sameer/.emacs.d/lisp/")
+(add-to-list 'load-path "/home/sameer/.emacs.d/pack/")
+(add-to-list 'load-path "/home/sameer/.emacs.d/org-pack/")
 
 ;; nnir
 
-(load-file "~/.emacs.d/lisp/imap.el")
+(load-file "/home/sameer/.emacs.d/lisp/imap.el")
 (require 'nnir)
 (setq nnir-search-engine 'namazu)
 (setq nnir-namazu-index-directory (expand-file-name "~/.namazu-mail"))
@@ -46,7 +47,8 @@
 (custom-set-variables
  '(org-directory "/home/sameer/org")
  '(org-agenda-files (list org-directory)))
-
+(require 'org-install)
+(require 'org-habit)
 ;; agenda
 ;; caused an issue last time , conactenated ~/org/~org as an org agenda file
 ;;(defvar dir-where-you-store-org-files "/home/sameer/org")
@@ -67,18 +69,22 @@
 
 ;; package-list
 ;; update
-(require 'package)
-(setq package-archives
-      '(("melpa" . "https://melpa.org/packages/")
-        ("gnu" . "https://elpa.gnu.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
-(package-initialize)
+(setq debug-on-error t)
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+  (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/") t)
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (package-initialize))
+(add-to-list 'load-path (expand-file-name "/home/sameer/.emacs.d/lisp"))
 
 ;;ucf
 (autoload 'ucf-mode "ucf-mode" "Xilinx UCF mode" t)
 (add-to-list 'auto-mode-alist '("\\.ucf\\'" . ucf-mode))
 ;; ide
 (setq max-lisp-eval-depth 10000)
+;  (setq max-specpdl-size 10000)
 
 (setq ggtags-executable-directory "/usr/bin/gtags")
 (setq ggtags-use-idutils t)
@@ -98,7 +104,8 @@
 (load "echo-server")
 (load "shared-buffer")
 (load "list2csv")
-; (load "ox-html")
+(load "org-fixup")
+(load "ox-html")
 (load "ox-rss")
 (load "org-dial")
 (load "org-git-link")
@@ -196,21 +203,17 @@
 
 
 (add-to-list 'load-path "~/lib/elisp/")
-;; (add-to-list 'load-path "~/.emacs.d/elpa/org-20150302/")
-;; (add-to-list 'load-path "~/.emacs.d/elpa/xclip-1.3/")
-;; (add-to-list 'load-path "~/.emacs.d/elpa/htmlize-20130207.1202/")
-(add-to-list 'load-path "~/.emacs.d/elpa/polymode-20151013.814/")
-(add-to-list 'load-path "~/.emacs.d/elpa/lua-mode-20150518.942/")
-(add-to-list 'load-path "~/.emacs.d/elpa/toc-org-20150801.748/")
-(add-to-list 'load-path "~/.emacs.d/elpa/epresent-20150324.610/")
+;; (add-to-list 'load-path "/home/sameer/.emacs.d/elpa/org-20150302/")
+;; (add-to-list 'load-path "/home/sameer/.emacs.d/elpa/xclip-1.3/")
+;; (add-to-list 'load-path "/home/sameer/.emacs.d/elpa/htmlize-20130207.1202/")
+(add-to-list 'load-path "/home/sameer/.emacs.d/elpa/polymode-20151013.814/")
+(add-to-list 'load-path "/home/sameer/.emacs.d/elpa/lua-mode-20150518.942/")
+(add-to-list 'load-path "/home/sameer/.emacs.d/elpa/toc-org-20150801.748/")
+(add-to-list 'load-path "/home/sameer/.emacs.d/elpa/epresent-20150324.610/")
 
 
-(require 'org)
-(require 'org-install)
+ (require 'org)
 
-;; (require 'org-habit)
-
-(require 'org-habit)
 (add-to-list 'org-modules "org-habit")
 (setq org-habit-preceding-days 7
       org-habit-following-days 1
@@ -280,7 +283,7 @@
 (setq visible-bell t)
 
 (global-set-key (kbd "C-c i") 
-(lambda() (interactive)(org-babel-load-file "~/.emacs.d/init.org")))
+(lambda() (interactive)(org-babel-load-file "/home/sameer/.emacs.d/init.org")))
 
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
@@ -425,7 +428,7 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 (setq org-default-notes-file "/home/sameer/org/notes.org")
      (define-key global-map "\C-cd" 'org-capture)
-(setq org-capture-templates (quote (("t" "Todo" entry (file+headline "/home/sameer/org/liste.org" "Tasks") "* TODO %?
+(setq org-capture-templates (quote (("t" "Todo" entry (file+headline "/home/sameer/org/todo.org" "Tasks") "* TODO %?
   %i
   %a" :prepend t) ("j" "Journal" entry (file+datetree "/home/sameer/org/journal.org") "* %?
 Entered on %U
@@ -469,7 +472,7 @@ Entered on %U
                   (org-todo 'done)
                 (org-todo 'todo)))))))
 
-; (add-to-list 'load-path "~/.emacs.d/elpa/org-download-20171116.1045/")
+; (add-to-list 'load-path "/home/sameer/.emacs.d/elpa/org-download-20171116.1045/")
 ; (require 'org-download)
 (setq org-download-method 'attach)
 (global-set-key (kbd "C-c S") 'org-download-screenshot)
@@ -527,30 +530,13 @@ Entered on %U
 ;;  To activate this feature, you need to set #+PROPERTY: header-args :eval never-export in the beginning or your document
 (setq org-confirm-babel-evaluate nil)
 ;; active Babel languages
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((gnuplot . t)))
+
 ;; add additional languages with '((language . t)))
 (org-babel-do-load-languages
  'org-babel-load-languages
  '(
-  
-   (gnuplot . t)
    (python . t)
-   (R . t)
-   (ruby . t)
    (emacs-lisp . t)
-   (ocaml . t)
-   (ditaa . t)
-   (dot . t)
-   (octave . t)
-   (sqlite . t)
-   (perl . t)
-   (screen . t)
-   (plantuml . t)
-   (lilypond . t)
-   (org . t)
-   (makefile . t)
    ))
 (setq org-src-preserve-indentation t)
 
@@ -707,7 +693,7 @@ Entered on %U
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
  '(package-selected-packages
    (quote
-    (ox-pandoc magit s aria2 ecb tabbar eide outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ##  rudel org-download cl-print calfw-org calfw))))
+    (ox-pandoc magit s aria2 ecb tabbar eide outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ##  rudel org-download cl-print ))))
 (put 'upcase-region 'disabled nil)
 
-(setq max-specpdl-size 13000)
+
