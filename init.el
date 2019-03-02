@@ -3,19 +3,30 @@
 ;; file coding system
 (prefer-coding-system 'utf-8)
 
-(setq user-emacs-directory "/home/sameer/.emacs.d/")
-(setq network-security-level 'high)
-(global-linum-mode 1)
-(setq max-specpdl-size 10000)
 ;; it did not work 
 ;; org-mode reinstall
 ;; (require 'package)
 ;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
-
+;; gnutls 
+(with-eval-after-load 'gnutls
+  (add-to-list 'gnutls-trustfiles "/usr/local/etc/libressl/cert.pem"))
 ;; Tell emacs where is your personal elisp lib dir
+;; bootstrap
+
 (add-to-list 'load-path "/home/sameer/.emacs.d/lisp/")
 (add-to-list 'load-path "/home/sameer/.emacs.d/pack/")
 (add-to-list 'load-path "/home/sameer/.emacs.d/org-pack/")
+
+
+(setq user-emacs-directory "/home/sameer/.emacs.d/")
+;; security
+
+(setq network-security-level 'high)
+(global-linum-mode 1)
+
+(setq max-specpdl-size 10000)
+
+;; spec
 
 ;; nnir
 
@@ -111,6 +122,7 @@
 (load "org-fixup")
 (load "ox-html")
 (load "mmencode")
+(load "safe-tls-defaults")
 (load "ox-rss")
 (load "org-dial")
 (load "org-git-link")
