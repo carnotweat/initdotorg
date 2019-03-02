@@ -1,6 +1,10 @@
 ;; -*- lexical-binding: t -*-
+;;  -*- coding: utf-8 -*-
+;; file coding system
+(prefer-coding-system 'utf-8)
 
 (setq user-emacs-directory "/home/sameer/.emacs.d/")
+(setq network-security-level 'high)
 (global-linum-mode 1)
 (setq max-specpdl-size 10000)
 ;; it did not work 
@@ -106,6 +110,7 @@
 (load "list2csv")
 (load "org-fixup")
 (load "ox-html")
+(load "mmencode")
 (load "ox-rss")
 (load "org-dial")
 (load "org-git-link")
