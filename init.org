@@ -1,3 +1,11 @@
+#+BEGIN_COMMENT 
+Fetaure list to be enabled in that order
+Order of execution
+| Feature | eval    | status  |
+| Ecoding | default | enabled |
+
+#+END_COMMENT
+
 #+BEGIN_SRC emacs-lisp
  (setq outshine-use-speed-commands t)
 #+END_SRC

@@ -49,7 +49,7 @@
  '(org-export-backends
    (quote
     (ascii beamer html icalendar latex man md odt org texinfo confluence deck freemind groff koma-letter rss s5 taskjuggler)))
- '(org-track-directory "/home/s/sys/initdotorg/org/lisp  ")
+ '(org-track-directory "  ")
  '(package-selected-packages
    (quote
     (mwe-log-commands evil undo-tree nvm org-wiki org-board writefreely request ox-gfm ox-pandoc magit s aria2 ecb tabbar eide outshine outorg ggtags gtags poporg twittering-mode twitter edit-server gmail-message-mode ebdb material-theme impatient-mode paredit slime emacs-cl togetherly ## xclip rudel org-download cl-print calfw-org calfw))))

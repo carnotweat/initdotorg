@@ -1,24 +1,32 @@
-;; -*- lexical-binding: t -*-
+ ;; -*- lexical-binding: t -*-
 ;;  -*- coding: utf-8 -*-
 ;; file coding system
+
+
 (prefer-coding-system 'utf-8)
+
+(package-initialize)
 
 ;; it did not work 
 ;; org-mode reinstall
-;; (require 'package)
-;; (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+
+
 ;; gnutls 
 (with-eval-after-load 'gnutls
   (add-to-list 'gnutls-trustfiles "/usr/local/etc/libressl/cert.pem"))
 ;; Tell emacs where is your personal elisp lib dir
 ;; bootstrap
 
-(add-to-list 'load-path "/home/sameer/.emacs.d/lisp/")
-(add-to-list 'load-path "/home/sameer/.emacs.d/pack/")
-(add-to-list 'load-path "/home/sameer/.emacs.d/org-pack/")
+(add-to-list 'load-path "/home/s/.emacs.d/lisp/")
+(add-to-list 'load-path "/home/s/.emacs.d/pack/")
+(add-to-list 'load-path "/home/s/.emacs.d/org-pack/")
 
+;; auto-compile
+(require 'auto-compile)
 
-(setq user-emacs-directory "/home/sameer/.emacs.d/")
+;; (require 'org)
+;; disabled to use habits
+(setq user-emacs-directory "/home/s/.emacs.d/lisp")
 ;; security
 
 (setq network-security-level 'high)
@@ -30,7 +38,7 @@
 
 ;; nnir
 
-(load-file "/home/sameer/.emacs.d/lisp/imap.el")
+(load-file "/home/s/.emacs.d/lisp/imap.el")
 (require 'nnir)
 (setq nnir-search-engine 'namazu)
 (setq nnir-namazu-index-directory (expand-file-name "~/.namazu-mail"))
@@ -55,22 +63,27 @@
 (set-default buffer-file-coding-system 'utf-8-unix)
 (set-default-coding-systems 'utf-8-unix)
 (prefer-coding-system 'utf-8-unix)
-(set-default default-buffer-file-coding-system 'utf-8-unix)
+(set-default buffer-file-coding-system 'utf-8-unix)
+;;
+
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
 
 ;; agenda
 
 (custom-set-variables
- '(org-directory "/home/sameer/org")
+ '(org-directory "/home/s/org")
  '(org-agenda-files (list org-directory)))
 (require 'org-install)
 (require 'org-habit)
 ;; agenda
 ;; caused an issue last time , conactenated ~/org/~org as an org agenda file
-;;(defvar dir-where-you-store-org-files "/home/sameer/org")
+;;(defvar dir-where-you-store-org-files "/home/s/org")
 ;; (setq 
 ;; org-agenda-files 
 ;; (mapcar (lambda (x) (concat dir-where-you-store-org-files x))
- ;;        '("/home/sameer/org")))
+ ;;        '("/home/s/org")))
 
 ;; clock in
 (setq org-clock-persist 'history)
@@ -91,9 +104,10 @@
   (add-to-list 'package-archives '("elpa" . "http://tromey.com/elpa/") t)
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
   (package-initialize))
-(add-to-list 'load-path (expand-file-name "/home/sameer/.emacs.d/lisp"))
-
+(add-to-list 'load-path (expand-file-name "/home/s/.emacs.d/lisp"))
+(require 'org-install)
 ;;ucf
 (autoload 'ucf-mode "ucf-mode" "Xilinx UCF mode" t)
 (add-to-list 'auto-mode-alist '("\\.ucf\\'" . ucf-mode))
@@ -114,6 +128,7 @@
 
 ;; modularizing init
 ;; load the packaged named xyz.
+(load "auto-compile")
 (load "colorg")
 (load "blog")
 (load "echo-server")
@@ -121,25 +136,25 @@
 (load "list2csv")
 (load "org-fixup")
 (load "ox-html")
+(load "org-publish")
 (load "mmencode")
 (load "safe-tls-defaults")
 (load "ox-rss")
 (load "org-dial")
 (load "org-git-link")
-(load "evil-undo")
 
 ;; evil-undo
-(require 'evil-undo)
 
 ;; ox-rss
-
+(add-to-list 'load-path "/home/s/.emacs.d/org/lisp/org-mode/contrib/lisp/")
+ 
 (require 'ox-rss)
 
 ;; tangle
 
       (require 'ob-tangle)
 
-;;  (add-to-list 'load-path "/home/sameer/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
+;;  (add-to-list 'load-path "/home/s/Work/org-mode/install/org-mode/emacs/site-lisp/org/")
 (with-eval-after-load 'org
 (org-babel-do-load-languages 'org-babel-load-languages '((sql . t)
 							 (python . t)
@@ -185,9 +200,9 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-;; Install org
+;; ;; Install org
 
-(use-package org)
+;; '(use-package org)
 
 ;; Contingency install
 
@@ -218,18 +233,19 @@
 ;; Just follow git-controlled links without asking
 (setq-default vc-follow-symlinks t)
 
+;; install 3
+
 
 (add-to-list 'load-path "~/lib/elisp/")
-;; (add-to-list 'load-path "/home/sameer/.emacs.d/elpa/org-20150302/")
-;; (add-to-list 'load-path "/home/sameer/.emacs.d/elpa/xclip-1.3/")
-;; (add-to-list 'load-path "/home/sameer/.emacs.d/elpa/htmlize-20130207.1202/")
-(add-to-list 'load-path "/home/sameer/.emacs.d/elpa/polymode-20151013.814/")
-(add-to-list 'load-path "/home/sameer/.emacs.d/elpa/lua-mode-20150518.942/")
-(add-to-list 'load-path "/home/sameer/.emacs.d/elpa/toc-org-20150801.748/")
-(add-to-list 'load-path "/home/sameer/.emacs.d/elpa/epresent-20150324.610/")
+;; (add-to-list 'load-path "/home/s/.emacs.d/elpa/org-20150302/")
+;; (add-to-list 'load-path "/home/s/.emacs.d/elpa/xclip-1.3/")
+;; (add-to-list 'load-path "/home/s/.emacs.d/elpa/htmlize-20130207.1202/")
+(add-to-list 'load-path "/home/s/.emacs.d/elpa/polymode-20151013.814/")
+(add-to-list 'load-path "/home/s/.emacs.d/elpa/lua-mode-20150518.942/")
+(add-to-list 'load-path "/home/s/.emacs.d/elpa/toc-org-20150801.748/")
+(add-to-list 'load-path "/home/s/.emacs.d/elpa/epresent-20150324.610/")
 
 
- (require 'org)
 
 (add-to-list 'org-modules "org-habit")
 (setq org-habit-preceding-days 7
@@ -299,12 +315,10 @@
 
 (setq visible-bell t)
 
-(global-set-key (kbd "C-c i") 
-(lambda() (interactive)(org-babel-load-file "/home/sameer/.emacs.d/init.org")))
+(global-set-key (kbd "C-g") 'keyboard-quit-cleanup)
 
-(set-terminal-coding-system 'utf-8)
-(set-keyboard-coding-system 'utf-8)
-(prefer-coding-system 'utf-8)
+(global-set-key (kbd "C-c i") 
+(lambda() (interactive)(org-babel-load-file "/home/s/.emacs.d/init.org")))
 
 (cond
  ((string-equal system-type "darwin")   ; Mac OS X
@@ -385,7 +399,23 @@
 (define-key global-map (kbd "C-c s r") 'flyspell-region)
 (define-key global-map (kbd "C-c s b") 'flyspell-buffer)
 (define-key global-map (kbd "C-c s s") 'flyspell-mode)
+;; quit
+(defun my-keyboard-quit()
+  "Escape the minibuffer or cancel region consistently using 'Control-g'.
+Normally if the minibuffer is active but we lost focus (say, we clicked away or set the cursor into another buffer)
+we can quit by pressing 'ESC' three times. This function handles it more conveniently, as it checks for the condition 
+of not beign in the minibuffer but having it active. Otherwise simply doing the ESC or (keyboard-escape-quit) would 
+brake whatever split of windows we might have in the frame."
+  (interactive)
+  (if (not(window-minibuffer-p (selected-window)))
+      (if (or mark-active (active-minibuffer-window))
+          (keyboard-escape-quit))
+    (keyboard-quit)))
 
+
+(define-key global-map (kbd "C-g") 'my-keyboard-quit)
+
+;; misc
 (global-set-key (kbd "C-x g") 'magit-status)
 (global-set-key (kbd "C-x M-g") 'magit-dispatch-popup)
 ;; (global-magit-file-mode 1)
@@ -428,7 +458,7 @@
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
-;;(setq org-directory "/home/sameer/org/")
+;;(setq org-directory "/home/s/org/")
 
 (setq org-hide-leading-stars t)
 (setq org-alphabetical-lists t)
@@ -443,24 +473,24 @@
 (define-key global-map "\C-cl" 'org-store-link)
 (define-key global-map (kbd "C-c a") 'org-agenda)
 (global-set-key "\C-cb" 'org-iswitchb)
-(setq org-default-notes-file "/home/sameer/org/notes.org")
+(setq org-default-notes-file "/home/s/org/notes.org")
      (define-key global-map "\C-cd" 'org-capture)
-(setq org-capture-templates (quote (("t" "Todo" entry (file+headline "/home/sameer/org/todo.org" "Tasks") "* TODO %?
+(setq org-capture-templates (quote (("t" "Todo" entry (file+headline "/home/s/org/todo.org" "Tasks") "* TODO %?
   %i
-  %a" :prepend t) ("j" "Journal" entry (file+datetree "/home/sameer/org/journal.org") "* %?
+  %a" :prepend t) ("j" "Journal" entry (file+datetree "/home/s/org/journal.org") "* %?
 Entered on %U
   %i
   %a"))))
 (add-to-list
  'org-capture-templates
- '("l" "Ledger Entry" plain (file "/home/sameer/org/inbox.ledger")
+ '("l" "Ledger Entry" plain (file "/home/s/org/inbox.ledger")
    "%<%Y/%m/%d> %^{To whom}
     Assets:Checking  $ -%^{How much}
     Expenses:%?" :unnarrowed t) t)
 (setq org-agenda-include-all-todo t)
 (setq org-agenda-include-diary t)
 
-; (setq org-agenda-files (quote ("/home/sameer/org/todo.org" "/home/sameer/org/sales.org")))
+; (setq org-agenda-files (quote ("/home/s/org/todo.org" "/home/s/org/sales.org")))
 ; (setq revert-without-query (quote ("sales.org")))
 
 (setq org-id-method (quote uuidgen))
@@ -489,8 +519,8 @@ Entered on %U
                   (org-todo 'done)
                 (org-todo 'todo)))))))
 
-; (add-to-list 'load-path "/home/sameer/.emacs.d/elpa/org-download-20171116.1045/")
-; (require 'org-download)
+(add-to-list 'load-path "/home/s/.emacs.d/elpa/org-download-20190209.1034")
+(require 'org-download)
 (setq org-download-method 'attach)
 (global-set-key (kbd "C-c S") 'org-download-screenshot)
 
@@ -555,43 +585,51 @@ Entered on %U
    (python . t)
    (emacs-lisp . t)
    ))
+
+;; templates
 (setq org-src-preserve-indentation t)
+(eval-after-load 'org
+'(progn
+     (add-to-list 'org-structure-template-alist
+'(("s" . "src")))))
+;; broken templates
+;; ;; (add-to-list 'org-structure-template-alist
+;; ;;             '("s" "#+NAME: ?\n#+BEGIN_SRC \n\n#+END_SRC"))
+;; (add-to-list 'org-structure-template-alist
+;;         '("S" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("S" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>"))
+;; (add-to-list 'org-structure-template-alist
+;;         '("m" "#+begin_src emacs-lisp\n\n#+end_src" "<src lang=\"emacs-lisp\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("m" "#+begin_src emacs-lisp\n\n#+end_src" "<src lang=\"emacs-lisp\">\n\n</src>"))
+;; ;; (add-to-list 'org-structure-template-alist
+;; ;;        '("r" "#+begin_src R :results output :session *R* :exports both\n\n#+end_src" "<src lang=\"R\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("r" "#+begin_src R :results output :session *R* :exports both\n\n#+end_src" "<src lang=\"R\">\n\n</src>"))
+;; ;; (add-to-list 'org-structure-template-alist
+;; ;;        '("R" "#+begin_src R :results output graphics :file (org-babel-temp-file \"figure\" \".png\") :exports both :width 600 :height 400 :session *R* \n\n#+end_sr;;c" "<src lang=\"R\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("R" "#+begin_src R :results output graphics :file (org-babel-temp-file \"figure\" \".png\") :exports both :width 600 :height 400 :session *R* \n\n#+end_src" "<src lang=\"R\">\n\n</src>"))
+;; ;;(add-to-list 'org-structure-template-alist
+;; ;;        '("RR" "#+begin_src R :results output graphics :file  (org-babel-temp-f;;  (concat (file-name-directory (or load-file-name buffer-file-name)) \"figure-\;;  ".png\") :exports both :width 600 :height 400 :session *R* \n\n#+end_src" "<s;; lang=\"R\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("RR" "#+begin_src R :results output graphics :file  (org-babel-temp-file (concat (file-name-directory (or load-file-name buffer-file-name)) \"figure-\") \".png\") :exports both :width 600 :height 400 :session *R* \n\n#+end_src" "<src lang=\"R\">\n\n</src>"))
+;; (add-to-list 'org-structure-template-alist
+;;         '("p" "#+begin_src python :results output :exports both\n\n#+end_src" "<src lang=\"python\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("p" "#+begin_src python :results output :exports both\n\n#+end_src" "<src lang=\"python\">\n\n</src>"))
+;; (add-to-list 'org-structure-template-alist
+;;         '("P" "#+begin_src python :results output :session *python* :exports both\n\n#+end_src" "<src lang=\"python\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("P" "#+begin_src python :results output :session *python* :exports both\n\n#+end_src" "<src lang=\"python\">\n\n</src>"))
+;; (add-to-list 'org-structure-template-alist
+;;         '("b" "#+begin_src shell :results output :exports both\n\n#+end_src" "<src lang=\"sh\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("b" "#+begin_src shell :results output :exports both\n\n#+end_src" "<src lang=\"sh\">\n\n</src>"))
+;; (add-to-list 'org-structure-template-alist
+;;         '("B" "#+begin_src shell :session *shell* :results output :exports both \n\n#+end_src" "<src lang=\"sh\">\n\n</src>"))
 
-(add-to-list 'org-structure-template-alist
-        '("B" "#+begin_src shell :session *shell* :results output :exports both \n\n#+end_src" "<src lang=\"sh\">\n\n</src>"))
-
-(add-to-list 'org-structure-template-alist
-        '("g" "#+begin_src dot :results output graphics :file \"/tmp/graph.pdf\" :exports both
-   digraph G {
-      node [color=black,fillcolor=white,shape=rectangle,style=filled,fontname=\"Helvetica\"];
-      A[label=\"A\"]
-      B[label=\"B\"]
-      A->B
-   }\n#+end_src" "<src lang=\"dot\">\n\n</src>"))
+;; (add-to-list 'org-structure-template-alist
+;;         '("g" "#+begin_src dot :results output graphics :file \"/tmp/graph.pdf\" :exports both
+;;    digraph G {
+;;       node [color=black,fillcolor=white,shape=rectangle,style=filled,fontname=\"Helvetica\"];
+;;       A[label=\"A\"]
+;;       B[label=\"B\"]
+;;       A->B
+;;    }\n#+end_src" "<src lang=\"dot\">\n\n</src>"))
 
 (global-set-key (kbd "C-c S-t") 'org-babel-execute-subtree)
 
@@ -616,7 +654,7 @@ Entered on %U
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 ;;file to save todo items
-;; (setq org-agenda-files (quote ("/home/sameer/org")))
+;; (setq org-agenda-files (quote ("/home/s/org")))
 
 ;;set priority range from A to C with default A
 (setq org-highest-priority ?A)

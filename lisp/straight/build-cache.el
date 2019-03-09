@@ -1,11 +1,11 @@
 
 :kak
 
-"26.1"
+"25.3.2"
 
-#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("org-elpa" ("2019-03-03 03:33:24" nil (:local-repo nil :package "org-elpa" :type git)) "straight" ("2019-03-03 03:33:24" ("emacs") (:type git :host github :repo "raxod502/straight.el" :files ("straight*.el") :branch "master" :package "straight" :local-repo "straight.el"))))
+#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data ("org-elpa" ("2019-03-09 06:02:49" nil (:local-repo nil :package "org-elpa" :type git)) "straight" ("2019-03-09 06:02:49" ("emacs") (:type git :host github :repo "raxod502/straight.el" :files ("straight*.el") :branch "master" :package "straight" :local-repo "straight.el"))))
 
-#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("straight" ((straight-autoloads straight-x straight) (autoload (quote straight-get-recipe) "straight" "Interactively select a recipe from one of the recipe repositories.
+#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data ("straight" ((straight-x straight-autoloads straight) (autoload (quote straight-get-recipe) "straight" "Interactively select a recipe from one of the recipe repositories.
 All recipe repositories in `straight-recipe-repositories' will
 first be cloned. After the recipe is selected, it will be copied
 to the kill ring. With a prefix argument, first prompt for a
@@ -224,10 +224,10 @@ according to the value of `straight-profiles'.
 
 (fn &optional FORCE)" t nil) (autoload (quote straight-thaw-versions) "straight" "Read version lockfiles and restore package versions to those listed.
 
-(fn)" t nil) (if (fboundp (quote register-definition-prefixes)) (register-definition-prefixes "straight" (quote ("straight-")))) (if (fboundp (quote register-definition-prefixes)) (register-definition-prefixes "straight-x" (quote ("straight-x-")))) (provide (quote straight-autoloads)))))
+(fn)" t nil) (provide (quote straight-autoloads)))))
 
-#s(hash-table size 65 test eq rehash-size 1.5 rehash-threshold 0.8125 data ())
+#s(hash-table size 65 test eq rehash-size 1.5 rehash-threshold 0.8 data ())
 
-("org-elpa" "melpa" "gnu-elpa-mirror" "emacsmirror" "straight" "emacs")
+("emacs" "straight" "emacsmirror" "gnu-elpa-mirror" "melpa" "org-elpa")
 
 t
