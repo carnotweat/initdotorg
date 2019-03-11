@@ -3,7 +3,7 @@
 
 "25.3.2"
 
-#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data ("org-elpa" ("2019-03-09 06:02:49" nil (:local-repo nil :package "org-elpa" :type git)) "straight" ("2019-03-09 06:02:49" ("emacs") (:type git :host github :repo "raxod502/straight.el" :files ("straight*.el") :branch "master" :package "straight" :local-repo "straight.el"))))
+#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data ("org-elpa" ("2019-03-11 22:17:19" nil (:local-repo nil :package "org-elpa" :type git)) "straight" ("2019-03-11 22:17:19" ("emacs") (:type git :host github :repo "raxod502/straight.el" :files ("straight*.el") :branch "master" :package "straight" :local-repo "straight.el"))))
 
 #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8 data ("straight" ((straight-x straight-autoloads straight) (autoload (quote straight-get-recipe) "straight" "Interactively select a recipe from one of the recipe repositories.
 All recipe repositories in `straight-recipe-repositories' will

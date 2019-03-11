@@ -5,8 +5,6 @@
 
 (prefer-coding-system 'utf-8)
 
-(package-initialize)
-
 ;; it did not work 
 ;; org-mode reinstall
 
@@ -105,6 +103,8 @@
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/") t)
   (add-to-list 'package-archives '("org" . "https://orgmode.org/elpa/") t)
+  (add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa"))
+
   (package-initialize))
 (add-to-list 'load-path (expand-file-name "/home/s/.emacs.d/lisp"))
 (require 'org-install)

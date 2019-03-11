@@ -44,7 +44,7 @@
  '(custom-safe-themes
    (quote
     ("732b807b0543855541743429c9979ebfb363e27ec91e82f463c91e68c772f6e3" "a24c5b3c12d147da6cef80938dca1223b7c7f70f2f382b26308eba014dc4833a" default)))
- '(org-agenda-files (quote ("/home/s/org/todo.org.bak")))
+ '(org-agenda-files (quote ("/home/s/org/analyze.org" "~/my-blog.org")))
  '(org-directory "~/org")
  '(org-export-backends
    (quote
@@ -97,3 +97,51 @@
 (add-to-list 'load-path "/home/s/.emacs.d/org/lisp/org-mode/contrib/lisp/")
 (require 'org-install)
 (require 'org-track)
+
+(if (fboundp 'normal-top-level-add-to-load-path)
+    (let* ((my-lisp-dir "~/.emacs.d/site-lisp/")
+           (default-directory my-lisp-dir))
+      (progn
+        (setq load-path
+              (append
+               (loop for dir in (directory-files my-lisp-dir)
+                     unless (string-match "^\\." dir)
+                     collecting (expand-file-name dir))
+               load-path)))))
+;; List of VISIBLE packages from melpa-unstable (http://melpa.org)
+;; Feel free to add more packages!
+(defvar melpa-include-packages
+  '(bbdb
+    color-theme
+    company-c-headers)
+  "Don't install any mELPA packages except these packages")
+
+(defvar package-filter-function nil
+  "Optional predicate function used to internally filter packages used by package.el.
+
+The function is called with the arguments PACKAGE VERSION ARCHIVE, where
+PACKAGE is a symbol, VERSION is a vector as produced by `version-to-list', and
+ARCHIVE is the string name of the package archive.")
+
+;; Don't take MELPA versions of certain packages
+(setq package-filter-function
+      (lambda (package version archive)
+        (or (not (string-equal archive "melpa"))
+            ;; install package in whitelist
+            (memq package melpa-include-packages)
+            ;; use all color themes
+            (string-match (format "%s" package) "-theme"))))
+
+(defadvice package--add-to-archive-contents
+  (around filter-packages (package archive) activate)
+  "Add filtering of available packages using `package-filter-function', if non-nil."
+  (when (or (null package-filter-function)
+      (funcall package-filter-function
+         (car package)
+         (funcall (if (fboundp 'package-desc-version)
+          'package--ac-desc-version
+        'package-desc-vers)
+            (cdr package))
+         archive))
+    ad-do-it))
+  (add-to-list 'package-archives '("localelpa" . "~/.emacs.d/localelpa"))
